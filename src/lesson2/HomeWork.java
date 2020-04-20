@@ -4,76 +4,63 @@ import java.util.Arrays;
 
 public class HomeWork {
 
-    // O(N) N = input.length
-    public static boolean checkBalanse(int[] input) {
-        // 1 2 3 1 | 4 3 ctrl + alt + l
-        StringBuilder resut = new StringBuilder();
+    public static void main(String[] args) {
+
+        System.out.println("Task6");
+        System.out.println(task6(new int[]{1, 3, 6, 2, 3, 5}));
+        System.out.println("Task7");
+        task7(new int[]{1, 2, 3, 4, 5, 6}, -2);
+
+    }
+
+    public static boolean task6(int[] array) {
+
+        StringBuilder resultString = new StringBuilder();
+
         int fullSum = 0;
-        for (int i : input) fullSum += i;
-        if (fullSum % 2 == 1) {
-            return false;
-        }
+
+        for (int i : array) fullSum += i;
+
         int leftSum = 0;
-        for (int i : input) {
+        for (int i : array) {
             leftSum += i;
             if (leftSum * 2 == fullSum) {
                 int sum = 0;
-                for (int el : input) {
+                for (int el : array) {
                     sum += el;
-                    resut.append(el).append(' ');
+                    resultString.append(el).append(' ');
                     if (sum == leftSum) {
-                        resut.append("| ");
+                        resultString.append("|| ");
                     }
                 }
-                System.out.println(resut);
+                System.out.println(resultString);
                 return true;
             }
         }
         return false;
     }
 
-    public static void shift(int[] input, int n) {
-        // 1 2 3 4 5 + 10 -> 2 3 4 5 1
-        // 1 2 3 4 5 -1 -> 5 1 2 3 4
-        // -1 = +4
-        // +10 = 0
-        // 10 % 5 = 0
-        // 12 % 5 = +2
+    public static void task7(int[] array, int n) {
+
         if (n < 0) {
             n = -n;
-            n = n % input.length;
-            n = input.length - n;
+            n = n % array.length;
+            n = array.length - n;
         }
-        n = n % input.length; // 4 % 5 = 4
-        System.out.println(n);
+
+        n = n % array.length;
+
         for (int i = 0; i < n; i++) {
-            int tmp = input[0];
-            //1 2 3 4 5 -> 1, 2 3 4 5 1
-            // 1 2 3 4 5
-            // 2 3 4 5
-            System.arraycopy(input, 1, input, 0, input.length - 1);
-            input[input.length - 1] = tmp;
+
+            int current = array[0];
+
+            for (int j = 0; j < array.length - 1; j++) {
+                array[j] = array[j + 1];
+            }
+
+            array[array.length - 1] = current;
         }
-        System.out.println(Arrays.toString(input));
+        System.out.println(Arrays.toString(array));
     }
 
-    public static void shiftON(int[] input, int n) {
-        if (n < 0) {
-            n = -n;
-            n = n % input.length;
-            n = input.length - n;
-        }
-        n = n % input.length;
-        int [] tmp = new int[input.length];
-        int start = n;
-        for (int i = n; i < n + input.length; i++) {
-            tmp[i - n] = input[i % input.length];
-        }
-        System.out.println(Arrays.toString(tmp));
-    }
-
-    public static void main(String[] args) {
-        // checkBalanse(new int[]{1, 3, 2, 5, 3, 1, 4, 3});
-        shiftON(new int[] {1, 2, 3, 4, 5}, 2);
-    }
 }
